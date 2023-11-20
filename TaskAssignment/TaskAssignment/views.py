@@ -9,12 +9,12 @@ from models import Tasks, Persons
 
 @app.route('/get_free_emps')
 def get_free_emps():
-    emps = Persons.query.filter(Persons.is_free.in_([True]))
+    emps = Persons.query.filter(Persons.is_free == True).all()
     return jsonify(emps)
 
 @app.route('/get_available_jobs')
 def get_available_jobs():
-    jobs = Tasks.query.filter(Tasks.completed.in_([False]))
+    jobs = Tasks.query.filter(Tasks.completed==False).order_by(Tasks.created_at).all()
     return jsonify(jobs)
                               
 @app.route('/mark_emp_busy/<emp_id>', methods=["POST"])
